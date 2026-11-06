@@ -178,7 +178,7 @@ tr:last-child td{border-bottom:0}
     <h1>Job Search HQ</h1>
     <p class="muted">Private. Connect this browser to your data repo to continue. The token stays in this browser only.</p>
     <label for="lk-repo">Data repo</label>
-    <input id="lk-repo" placeholder="owner/repo" value="lamcrystal/job-search-hq-data">
+    <input id="lk-repo" placeholder="owner/repo" value="lamcrystal/jobsearchhqdata">
     <label for="lk-token">Fine-grained GitHub token</label>
     <input id="lk-token" type="password" placeholder="github_pat_…" autocomplete="off">
     <p class="small muted">Scope it to the data repo only, with Contents: Read and write.</p>
@@ -306,7 +306,7 @@ const DEFAULTS = {
 };
 
 /* ---------- GitHub data layer ---------- */
-const cfg = { repo: store.get('jhq.repo') || 'lamcrystal/job-search-hq-data', token: store.get('jhq.token') || '' };
+const cfg = { repo: store.get('jhq.repo') || 'lamcrystal/jobsearchhqdata', token: store.get('jhq.token') || '' };
 const state = { jobs:{}, network:{}, settings:structuredClone(DEFAULTS.settings), sha:{}, synced:null, view: store.get('jhq.view') || 'overview', filter:{} };
 
 async function gh(path, opts={}) {
