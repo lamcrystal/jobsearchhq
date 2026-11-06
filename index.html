@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Job Search HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#fffdf9; --ink:#1d1b18; --muted:#6d675e; --line:#e6e1d6;
+  --accent:#3d5afe; --accent-ink:#fff; --accent-soft:#e8ecff;
+  --ok:#1f8a5b; --ok-soft:#e3f4ec; --warn:#b5651d; --warn-soft:#fbeedd; --bad:#c0392b; --bad-soft:#fbe5e2;
+  --s-new:#8a8172; --s-approved:#3d5afe; --s-applied:#7b4fd6; --s-interviewing:#d48a00; --s-offer:#1f8a5b; --s-closed:#a39c90;
+  --radius:12px; --shadow:0 1px 2px rgba(30,25,15,.06),0 4px 16px rgba(30,25,15,.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141312; --panel:#1c1b19; --ink:#f0ece4; --muted:#a29b8f; --line:#2f2c28;
+  --accent:#7c8cff; --accent-ink:#0f1020; --accent-soft:#232848;
+  --ok:#4cc38a; --ok-soft:#173226; --warn:#e5a050; --warn-soft:#382816; --bad:#ef7564; --bad-soft:#3a1d19;
+  --s-new:#a29b8f; --s-approved:#7c8cff; --s-applied:#a98bf0; --s-interviewing:#f0b23c; --s-offer:#4cc38a; --s-closed:#6b655c;
+  --shadow:none;
+}}
+:root[data-theme="dark"]{
+  --bg:#141312; --panel:#1c1b19; --ink:#f0ece4; --muted:#a29b8f; --line:#2f2c28;
+  --accent:#7c8cff; --accent-ink:#0f1020; --accent-soft:#232848;
+  --ok:#4cc38a; --ok-soft:#173226; --warn:#e5a050; --warn-soft:#382816; --bad:#ef7564; --bad-soft:#3a1d19;
+  --s-new:#a29b8f; --s-approved:#7c8cff; --s-applied:#a98bf0; --s-interviewing:#f0b23c; --s-offer:#4cc38a; --s-closed:#6b655c;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;margin:0;letter-spacing:-.01em}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 12px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--ink);background:var(--line)}
+.btn.sm{padding:3px 9px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:default}
+input,select,textarea{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:100%}
+textarea{resize:vertical;min-height:90px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:500}
+.muted{color:var(--muted)} .small{font-size:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+
+/* Lock */
+#lock{min-height:100vh;display:grid;place-items:center;padding:16px}
+.lockcard{max-width:420px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
+.lockcard h1{font-size:28px;margin-bottom:6px}
+
+/* Shell */
+#app{display:none;min-height:100vh}
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+nav.side{border-right:1px solid var(--line);padding:20px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px}
+nav.side .brand{font-family:Fraunces,serif;font-size:20px;font-weight:600;padding:0 10px 16px}
+nav.side button{display:flex;justify-content:space-between;align-items:center;text-align:left;border:0;background:none;padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--muted);font-weight:500}
+nav.side button:hover{background:var(--line);color:var(--ink)}
+nav.side button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--line)}
+.count{font-size:11px;background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:0 7px;font-weight:600}
+nav.side .foot{margin-top:auto;font-size:12px;color:var(--muted);padding:10px}
+main{padding:28px 32px 60px;min-width:0}
+.head{display:flex;align-items:flex-end;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.head h2{font-size:28px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.pad{padding:16px 18px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.panel h3{font-size:16px;margin-bottom:12px}
+
+.stat .n{font-family:Fraunces,serif;font-size:32px;font-weight:600;line-height:1.1}
+.stat .l{color:var(--muted);font-size:12px;font-weight:500}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;border-radius:20px;padding:2px 8px;background:var(--line);color:var(--muted);white-space:nowrap}
+.pill.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st-new{color:var(--s-new)} .st-approved{color:var(--s-approved);background:var(--accent-soft)}
+.st-applied{color:var(--s-applied)} .st-interviewing{color:var(--s-interviewing);background:var(--warn-soft)}
+.st-offer{color:var(--s-offer);background:var(--ok-soft)} .st-rejected,.st-dismissed{color:var(--s-closed)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.bad{background:var(--bad-soft);color:var(--bad)}
+
+/* Cards / lists */
+.list{display:flex;flex-direction:column;gap:10px}
+.job{padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:start}
+.job .t{font-weight:600;font-size:15px}
+.job .meta{color:var(--muted);font-size:12.5px}
+.job .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.empty{padding:36px;text-align:center;color:var(--muted)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filters input{max-width:260px}
+.filters select{width:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:6px 12px;cursor:pointer;color:var(--muted);font-weight:500}
+.seg button.on{background:var(--accent-soft);color:var(--accent)}
+
+/* Kanban */
+.board{display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:14px;overflow-x:auto;padding-bottom:6px}
+.col{background:color-mix(in srgb,var(--line) 45%,transparent);border-radius:var(--radius);padding:10px;min-height:200px}
+.col h4{margin:2px 4px 10px;font-size:13px;display:flex;justify-content:space-between}
+.col.drop{outline:2px dashed var(--accent);outline-offset:-4px}
+.kc{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:grab}
+.kc .t{font-weight:600}
+.kc .c{color:var(--muted);font-size:12.5px}
+.kc .em{margin-top:8px;font-size:12px;border-top:1px solid var(--line);padding-top:6px;color:var(--muted)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto}
+
+/* Outreach */
+.draft{padding:14px 16px}
+.draft pre{white-space:pre-wrap;font:13px/1.55 Inter,sans-serif;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0 0;max-height:160px;overflow:auto}
+.draft.collapsed pre{display:none}
+
+/* Charts */
+.funnel .bar{display:grid;grid-template-columns:100px 1fr 36px;gap:10px;align-items:center;margin:8px 0}
+.funnel .track{height:22px;background:var(--bg);border-radius:6px;overflow:hidden}
+.funnel .fill{height:100%;border-radius:6px}
+.weeks{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:6px}
+.weeks .w{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.weeks .stack{flex:1;width:100%;display:flex;align-items:flex-end;gap:3px}
+.weeks .b{flex:1;border-radius:3px 3px 0 0;min-height:2px}
+.weeks .lbl{font-size:10.5px;color:var(--muted)}
+.legend{display:flex;gap:12px;font-size:12px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.mix .r{display:flex;justify-content:space-between;margin:6px 0 3px;font-size:13px}
+.mix .track{height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.mix .fill{height:100%;background:var(--accent);border-radius:4px}
+.strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.day{border:1px solid var(--line);border-radius:10px;padding:8px;min-height:96px;background:var(--bg)}
+.day.today{border-color:var(--accent)}
+.day .d{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.day .it{font-size:12px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:3px 6px;margin-bottom:4px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.needs li{padding:8px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.needs li:last-child{border-bottom:0}
+.needs ul{list-style:none;margin:0;padding:0}
+
+/* Drawer & modal */
+.scrim{position:fixed;inset:0;background:rgba(10,8,5,.35);display:none;z-index:20}
+.scrim.on{display:block}
+.drawer{position:fixed;top:0;right:0;height:100vh;width:min(560px,100vw);background:var(--panel);border-left:1px solid var(--line);z-index:21;transform:translateX(100%);transition:transform .2s ease;overflow-y:auto;padding:22px}
+.drawer.on{transform:none}
+.drawer h2{font-size:22px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;z-index:30;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+.sync{font-size:12px;color:var(--muted)}
+.sync.err{color:var(--bad)}
+.log{font-family:ui-monospace,Menlo,monospace;font-size:12px;max-height:240px;overflow:auto}
+.log div{padding:3px 0;border-bottom:1px dashed var(--line)}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav.side{position:static;height:auto;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 16px}
+  nav.side .brand,nav.side .foot{display:none}
+  nav.side button{flex:none}
+  main{padding:18px 16px 60px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .g4.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .job{grid-template-columns:1fr}
+  .job .acts{justify-content:flex-start}
+  .strip{grid-template-columns:repeat(7,110px);overflow-x:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- Lock screen -->
+<section id="lock">
+  <div class="lockcard">
+    <h1>Job Search HQ</h1>
+    <p class="muted">Private. Connect this browser to your data repo to continue. The token stays in this browser only.</p>
+    <label for="lk-repo">Data repo</label>
+    <input id="lk-repo" placeholder="owner/repo" value="lamcrystal/job-search-hq-data">
+    <label for="lk-token">Fine-grained GitHub token</label>
+    <input id="lk-token" type="password" placeholder="github_pat_…" autocomplete="off">
+    <p class="small muted">Scope it to the data repo only, with Contents: Read and write.</p>
+    <div class="row" style="margin-top:14px"><button class="btn primary" id="lk-go">Unlock</button><span id="lk-msg" class="small muted"></span></div>
+  </div>
+</section>
+
+<!-- App -->
+<div id="app">
+<div class="shell">
+  <nav class="side" id="nav">
+    <div class="brand">Job Search HQ</div>
+    <button data-v="overview">Overview</button>
+    <button data-v="discover">Discover <span class="count" id="c-discover"></span></button>
+    <button data-v="pipeline">Pipeline <span class="count" id="c-pipeline"></span></button>
+    <button data-v="outreach">Outreach <span class="count" id="c-outreach"></span></button>
+    <button data-v="network">Network <span class="count" id="c-network"></span></button>
+    <button data-v="templates">Templates</button>
+    <button data-v="settings">Settings</button>
+    <div class="foot"><div id="sync" class="sync">Not synced</div><button class="btn ghost sm" id="refresh" style="margin-top:6px;padding-left:0">Refresh</button></div>
+  </nav>
+  <main id="view"></main>
+</div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Details"></aside>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } };
+const DAY = 864e5;
+const now = () => new Date();
+const iso = d => new Date(d).toISOString();
+const dayKey = d => { const x = new Date(d); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); };
+const startOfDay = d => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+const fmt = d => d ? new Date(d).toLocaleDateString(undefined,{month:'short',day:'numeric'}) : '';
+const ago = d => { if(!d) return ''; const m = Math.round((Date.now()-new Date(d))/6e4); if(m<60) return m+'m ago'; const h=Math.round(m/60); if(h<48) return h+'h ago'; return Math.round(h/24)+'d ago'; };
+const uid = p => p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} }, del(k){ try { localStorage.removeItem(k); } catch {} } };
+const b64e = s => { const bytes = new TextEncoder().encode(s); let bin=''; for (let i=0;i<bytes.length;i+=0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000)); return btoa(bin); };
+const b64d = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')), c => c.charCodeAt(0)));
+let toastT; const toast = m => { const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2200); };
+const copy = async txt => { try { await navigator.clipboard.writeText(txt); toast('Copied'); } catch { toast('Copy failed'); } };
+
+/* ---------- constants ---------- */
+const STAGES = ['approved','applied','interviewing','offer'];
+const STAGE_LABEL = {new:'New',approved:'Approved',applied:'Applied',interviewing:'Interviewing',offer:'Offer',rejected:'Rejected',dismissed:'Dismissed'};
+const ROLE_LABEL = {recruiter:'Recruiter',hiring_manager:'Hiring manager',designer:'Designer',alum:'Alum',other:'Contact'};
+const FILES = ['jobs','network','settings'];
+const DEFAULT_TEMPLATES = {
+  recruiter:{label:'Recruiter',subject:'{role} ({jobNumber}) — {name}',body:`Hi {first},
+
+I just applied for the {role} role at {company} ({jobNumber}) and wanted to reach out directly. I'm a new-grad product designer focused on {focus}, and {company}'s work on {hook} is exactly the kind of problem I want to work on.
+
+My portfolio is here: {portfolio}
+
+Would you be open to a quick chat, or pointing me to the right person on the design team?
+
+Thanks so much,
+{name}`},
+  hiring_manager:{label:'Hiring manager',subject:'Designer interested in {role} on your team',body:`Hi {first},
+
+I saw {company} is hiring a {role} ({jobNumber}) and it looks like it may sit on your team. I've applied, and wanted to say hello directly.
+
+A project that might be relevant: {project}. More in my portfolio: {portfolio}
+
+If you have 15 minutes in the next couple of weeks, I'd love to hear what the team is focused on.
+
+Best,
+{name}`},
+  peer:{label:'Peer designer',subject:'Quick question about design at {company}',body:`Hi {first},
+
+I came across your work at {company} and really liked {hook}. I'm applying for the {role} role ({jobNumber}) and would love to hear what working on the design team is like — even 10 minutes would mean a lot.
+
+Portfolio, if useful: {portfolio}
+
+Thanks,
+{name}`},
+  alum:{label:'Alum',subject:'Fellow {school} grad — {role} at {company}',body:`Hi {first},
+
+I'm a recent {school} grad and noticed you're at {company}. I'm applying for the {role} position ({jobNumber}) and would really value your perspective on the team and culture.
+
+Here's my portfolio: {portfolio}
+
+Would you be up for a short call sometime?
+
+Thank you,
+{name}`},
+  followup:{label:'Follow-up',subject:'Re: {role} at {company}',body:`Hi {first},
+
+Just following up on my note about the {role} role ({jobNumber}). I know things get busy — I'm still very interested and happy to share anything that would help.
+
+Portfolio: {portfolio}
+
+Thanks again,
+{name}`},
+  thankyou:{label:'Thank-you',subject:'Thank you — {role} conversation',body:`Hi {first},
+
+Thank you for taking the time to talk about the {role} role today. I especially enjoyed hearing about {hook}, and it made me even more excited about the team.
+
+Please let me know if there's anything else I can share.
+
+Best,
+{name}`},
+  catchup:{label:'Catch-up',subject:'Checking in',body:`Hi {first},
+
+Hope things are going well at {company}! Wanted to share a quick update: {update}
+
+Would love to hear what you've been working on too.
+
+Best,
+{name}`}
+};
+const DEFAULTS = {
+  jobs: {},
+  network: {},
+  settings: { name:'', school:'', portfolio:'', email:'', focus:'', templates: DEFAULT_TEMPLATES, search:{ keywords:['UI/UX designer','product designer','UX designer','UI designer'], levels:['internship','entry level','associate'], locations:['New York, NY','Remote (US)'] }, log:[] }
+};
+
+/* ---------- GitHub data layer ---------- */
+const cfg = { repo: store.get('jhq.repo') || 'lamcrystal/job-search-hq-data', token: store.get('jhq.token') || '' };
+const state = { jobs:{}, network:{}, settings:structuredClone(DEFAULTS.settings), sha:{}, synced:null, view: store.get('jhq.view') || 'overview', filter:{} };
+
+async function gh(path, opts={}) {
+  const r = await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${path}`, {
+    ...opts, cache:'no-store',
+    headers: { 'Accept':'application/vnd.github+json', 'Authorization':`Bearer ${cfg.token}`, 'X-GitHub-Api-Version':'2022-11-28', ...(opts.headers||{}) }
+  });
+  return r;
+}
+async function readFile(name) {
+  const r = await gh(`data/${name}.json?t=${Date.now()}`);
+  if (r.status === 404) return { data: structuredClone(DEFAULTS[name]), sha: null };
+  if (!r.ok) throw new Error(`${r.status} reading ${name}.json`);
+  const j = await r.json();
+  let text;
+  if (j.content) text = b64d(j.content);
+  else { // >1MB files: fetch raw
+    const raw = await gh(`data/${name}.json`, { headers:{ 'Accept':'application/vnd.github.raw+json' } });
+    text = await raw.text();
+  }
+  let data; try { data = JSON.parse(text); } catch { throw new Error(`${name}.json is not valid JSON`); }
+  return { data, sha: j.sha };
+}
+async function writeFile(name, data, sha, message) {
+  const body = { message: message || `Update ${name}`, content: b64e(JSON.stringify(data, null, 2) + '\n') };
+  if (sha) body.sha = sha;
+  const r = await gh(`data/${name}.json`, { method:'PUT', body: JSON.stringify(body), headers:{'Content-Type':'application/json'} });
+  if (r.status === 409 || r.status === 422) { const e = new Error('conflict'); e.conflict = true; throw e; }
+  if (!r.ok) throw new Error(`${r.status} writing ${name}.json`);
+  const j = await r.json();
+  return j.content.sha;
+}
+// Serialize writes per file within this tab.
+const queues = {};
+function update(name, fn, message) {
+  if (!FILES.includes(name)) return Promise.reject(new Error('Unknown file: '+name));
+  const run = async () => {
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const { data, sha } = await readFile(name);
+      const draft = structuredClone(data);
+      let next = await fn(draft);
+      if (next === undefined) next = draft;
+      try {
+        const newSha = await writeFile(name, next, sha, message);
+        state[name] = next; state.sha[name] = newSha; state.synced = new Date();
+        renderSoon();
+        return next;
+      } catch (e) {
+        if (!e.conflict) throw e;
+        await new Promise(r => setTimeout(r, 300 + Math.random()*700*(attempt+1)));
+      }
+    }
+    throw new Error(`Could not save ${name}.json after several retries`);
+  };
+  const p = (queues[name] || Promise.resolve()).catch(()=>{}).then(run);
+  queues[name] = p;
+  p.catch(e => { setSync(e.message, true); toast('Save failed: '+e.message); });
+  return p;
+}
+async function loadAll() {
+  setSync('Syncing…');
+  const res = await Promise.all(FILES.map(readFile));
+  FILES.forEach((f,i) => { state[f] = res[i].data; state.sha[f] = res[i].sha; });
+  state.settings = { ...structuredClone(DEFAULTS.settings), ...state.settings, templates: { ...DEFAULT_TEMPLATES, ...(state.settings.templates||{}) } };
+  state.synced = new Date();
+  // Create any missing files on first connect.
+  for (const f of FILES) if (!state.sha[f]) await update(f, d => d, `Create ${f}.json`);
+  setSync();
+}
+function setSync(msg, err) {
+  const el = $('#sync'); if (!el) return;
+  el.textContent = msg || (state.synced ? `Synced ${state.synced.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}` : 'Not synced');
+  el.classList.toggle('err', !!err);
+}
+async function addLog(msg) {
+  return update('settings', d => { d.log = [{ at: iso(now()), msg: String(msg) }, ...(d.log||[])].slice(0, 300); return d; }, 'Log: ' + String(msg).slice(0,60));
+}
+
+/* ---------- automation bridge ---------- */
+let resolveReady; const readyP = new Promise(r => resolveReady = r);
+window.jobhq = {
+  get ready() { return readyP; },
+  summary: async () => Object.values(state.jobs).map(j => ({ id:j.id, title:j.title, company:j.company, location:j.location, status:j.status, outreachStatus:j.outreachStatus||null, linkedinId:j.linkedinId||null, appNumber:j.appNumber||null, foundAt:j.foundAt, drafts:(j.outreach||[]).length })),
+  job: async id => structuredClone(state.jobs[id] || null),
+  network: async () => structuredClone(state.network),
+  settings: async () => structuredClone(state.settings),
+  read: async name => (await readFile(name)).data,
+  update: (name, fn, message) => update(name, fn, message),
+  log: msg => addLog(msg),
+  refresh: async () => { await loadAll(); render(); return true; },
+  version: 1
+};
+
+/* ---------- derived ---------- */
+const jobsArr = () => Object.values(state.jobs);
+const netArr = () => Object.values(state.network);
+const allDrafts = () => jobsArr().flatMap(j => (j.outreach||[]).map(o => ({ ...o, job: j })));
+function nextFollowUp(c) {
+  if (c.nextFollowUpAt) return new Date(c.nextFollowUpAt);
+  if (!c.lastContactAt) return null;
+  return new Date(new Date(c.lastContactAt).getTime() + ((c.followUps||0) === 0 ? 7 : 14) * DAY);
+}
+function draftFollowUp(o) { if (o.followUpAt) return new Date(o.followUpAt); if (o.sentAt) return new Date(new Date(o.sentAt).getTime() + 7*DAY); return null; }
+function dueItems(fromDays=-365, toDays=7) {
+  const a = startOfDay(now()).getTime() + fromDays*DAY, b = startOfDay(now()).getTime() + (toDays+1)*DAY;
+  const out = [];
+  netArr().forEach(c => { const d = nextFollowUp(c); if (d && d >= a && d < b && !c.archived) out.push({ kind:'contact', date:d, label:c.name, sub:c.company, id:c.id }); });
+  allDrafts().forEach(o => { if (o.sentAt && !o.repliedAt && !o.followedUpAt) { const d = draftFollowUp(o); if (d && d >= a && d < b) out.push({ kind:'draft', date:d, label:o.name, sub:o.job.company, id:o.job.id }); } });
+  return out.sort((x,y) => x.date - y.date);
+}
+function fill(tpl, ctx) { return tpl.replace(/\{(\w+)\}/g, (m,k) => ctx[k] != null && ctx[k] !== '' ? ctx[k] : m); }
+function ctxFor(job, person) {
+  const s = state.settings;
+  return { role: job?.title || '', company: job?.company || '', jobNumber: job?.jobNumber || job?.appNumber || job?.linkedinId || '', portfolio: s.portfolio || '', name: s.name || '', school: s.school || '', focus: s.focus || '', first: (person?.name || '').split(' ')[0] || '' };
+}
+
+/* ---------- actions ---------- */
+function setStatus(id, status) {
+  return update('jobs', d => { const j = d[id]; if (!j) return d; j.status = status; j.history = [...(j.history||[]), { at: iso(now()), status }]; if (status === 'approved' && !j.outreachStatus) { j.outreachStatus = 'queued'; j.approvedAt = iso(now()); } if (status === 'applied' && !j.appliedAt) j.appliedAt = iso(now()); return d; }, `${STAGE_LABEL[status]}: ${state.jobs[id]?.title} @ ${state.jobs[id]?.company}`).then(() => toast(STAGE_LABEL[status]));
+}
+function setDraft(jobId, draftId, patch, msg) {
+  return update('jobs', d => { const o = (d[jobId]?.outreach||[]).find(x => x.id === draftId); if (o) Object.assign(o, patch); return d; }, msg);
+}
+
+/* ---------- views ---------- */
+const views = {};
+let renderPending = false;
+function renderSoon() { if (renderPending) return; renderPending = true; requestAnimationFrame(() => { renderPending = false; render(); }); }
+function render() {
+  const v = state.view;
+  document.querySelectorAll('#nav button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  const jobs = jobsArr();
+  $('#c-discover').textContent = jobs.filter(j => j.status === 'new').length || '';
+  $('#c-pipeline').textContent = jobs.filter(j => STAGES.includes(j.status)).length || '';
+  $('#c-outreach').textContent = allDrafts().filter(o => !o.sentAt).length || '';
+  $('#c-network').textContent = dueItems(-365, 0).filter(x => x.kind==='contact').length || '';
+  const focusId = document.activeElement?.id; const focusVal = document.activeElement?.value; const pos = document.activeElement?.selectionStart;
+  $('#view').innerHTML = views[v]();
+  if (focusId && document.getElementById(focusId)) { const el = document.getElementById(focusId); el.focus(); if (focusVal != null && el.value === focusVal && pos != null) try { el.setSelectionRange(pos,pos); } catch {} }
+  setSync();
+}
+
+views.overview = () => {
+  const jobs = jobsArr();
+  const counts = s => jobs.filter(j => j.status === s).length;
+  const reached = s => jobs.filter(j => { const h = (j.history||[]).map(x=>x.status).concat(j.status); return h.includes(s); }).length;
+  const drafts = allDrafts();
+  const funnel = [['Discovered', jobs.length, 'var(--s-new)'], ['Approved', reached('approved'), 'var(--s-approved)'], ['Applied', reached('applied'), 'var(--s-applied)'], ['Interviewing', reached('interviewing'), 'var(--s-interviewing)'], ['Offer', reached('offer'), 'var(--s-offer)']];
+  const max = Math.max(1, ...funnel.map(f => f[1]));
+
+  // weekly activity, last 8 weeks
+  const weeks = []; const sow = startOfDay(now()); sow.setDate(sow.getDate() - ((sow.getDay()+6)%7));
+  for (let i = 7; i >= 0; i--) { const s = new Date(sow.getTime() - i*7*DAY), e = new Date(s.getTime() + 7*DAY); const inW = d => d && new Date(d) >= s && new Date(d) < e;
+    weeks.push({ lbl: fmt(s), found: jobs.filter(j => inW(j.foundAt)).length, applied: jobs.filter(j => inW(j.appliedAt)).length, sent: drafts.filter(o => inW(o.sentAt)).length }); }
+  const wmax = Math.max(1, ...weeks.flatMap(w => [w.found, w.applied, w.sent]));
+
+  // open role mix
+  const open = jobs.filter(j => ['new','approved','applied','interviewing'].includes(j.status));
+  const mixBy = (fn) => { const m = {}; open.forEach(j => { const k = fn(j); m[k] = (m[k]||0)+1; }); return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5); };
+  const loc = mixBy(j => j.remote || /remote/i.test(j.location||'') ? 'Remote' : /new york|nyc|brooklyn|manhattan/i.test(j.location||'') ? 'NYC' : 'Other');
+  const typ = mixBy(j => { const t = (j.title||'').toLowerCase(); return /intern/.test(t) ? 'Internship' : /ux research|researcher/.test(t) ? 'UX research' : /product designer/.test(t) ? 'Product design' : /ui/.test(t) && !/ux/.test(t) ? 'UI / visual' : 'UX / UI'; });
+  const mixHtml = (rows) => rows.length ? rows.map(([k,n]) => `<div class="r"><span>${esc(k)}</span><span class="muted">${n}</span></div><div class="track"><div class="fill" style="width:${Math.round(n/open.length*100)}%"></div></div>`).join('') : '<p class="muted small">No open roles yet.</p>';
+
+  // 7-day strip
+  const items = dueItems(-365, 6); const today = startOfDay(now());
+  const overdue = items.filter(x => x.date < today);
+  const days = Array.from({length:7}, (_,i) => new Date(today.getTime() + i*DAY));
+  const strip = days.map((d,i) => { const its = items.filter(x => dayKey(x.date) === dayKey(d) || (i===0 && x.date < today));
+    return `<div class="day ${i===0?'today':''}"><div class="d">${i===0?'Today':d.toLocaleDateString(undefined,{weekday:'short',day:'numeric'})}</div>${its.map(x => `<div class="it" data-open="${x.kind}:${esc(x.id)}" title="${esc(x.label)} · ${esc(x.sub)}">${x.date<today?'⚠ ':''}${esc(x.label)}</div>`).join('') || ''}</div>`; }).join('');
+
+  // needs you
+  const needs = [];
+  const newCount = counts('new'); if (newCount) needs.push(`<li><span class="pill st-new">${newCount} new</span><span>listings to review</span><span class="spacer"></span><button class="btn sm" data-go="discover">Review</button></li>`);
+  const ready = drafts.filter(o => !o.sentAt && o.body); if (ready.length) needs.push(`<li><span class="pill st-approved">${ready.length}</span><span>outreach drafts ready to send</span><span class="spacer"></span><button class="btn sm" data-go="outreach">Open</button></li>`);
+  if (overdue.length) needs.push(`<li><span class="pill bad">${overdue.length}</span><span>follow-ups overdue</span><span class="spacer"></span><button class="btn sm" data-go="network">See</button></li>`);
+  jobs.filter(j => j.status === 'approved' && !j.appliedAt && j.approvedAt && Date.now() - new Date(j.approvedAt) > 3*DAY).slice(0,5).forEach(j => needs.push(`<li><span class="pill warn">Apply?</span><span><b>${esc(j.title)}</b> · ${esc(j.company)} — approved ${ago(j.approvedAt)}</span><span class="spacer"></span><button class="btn sm" data-open="job:${esc(j.id)}">Open</button></li>`));
+  jobs.filter(j => j.latestEmail && j.latestEmail.unread).slice(0,5).forEach(j => needs.push(`<li><span class="pill ok">Email</span><span><b>${esc(j.company)}</b>: ${esc(j.latestEmail.subject)}</span><span class="spacer"></span><button class="btn sm" data-open="job:${esc(j.id)}">Open</button></li>`));
+  const log = (state.settings.log||[]).slice(0,40);
+
+  return `
+  <div class="head"><h2>Overview</h2><span class="muted">${now().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}</span></div>
+  <div class="grid g4 stats" style="margin-bottom:16px">
+    ${[['New listings',counts('new')],['Applied',counts('applied')],['Interviewing',counts('interviewing')],['Drafts to send',drafts.filter(o=>!o.sentAt).length]].map(([l,n]) => `<div class="panel pad stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('')}
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="panel pad"><h3>Needs you</h3><div class="needs">${needs.length ? `<ul>${needs.join('')}</ul>` : '<p class="muted">You\'re all caught up.</p>'}</div></div>
+    <div class="panel pad funnel"><h3>Pipeline funnel</h3>${funnel.map(([l,n,c]) => `<div class="bar"><span class="small">${l}</span><div class="track"><div class="fill" style="width:${Math.max(n?3:0, n/max*100)}%;background:${c}"></div></div><b class="small" style="text-align:right">${n}</b></div>`).join('')}</div>
+  </div>
+  <div class="panel pad" style="margin-bottom:16px"><div class="row"><h3 style="margin:0">Next 7 days</h3><span class="spacer"></span><span class="small muted">Follow-ups for contacts and sent outreach</span></div><div class="strip" style="margin-top:12px">${strip}</div></div>
+  <div class="grid g3">
+    <div class="panel pad"><h3>Weekly activity</h3>
+      <div class="weeks">${weeks.map(w => `<div class="w"><div class="stack">${[['found','var(--s-new)'],['applied','var(--s-applied)'],['sent','var(--s-approved)']].map(([k,c]) => `<div class="b" title="${k}: ${w[k]}" style="height:${w[k]/wmax*100}%;background:${c}"></div>`).join('')}</div><div class="lbl">${w.lbl}</div></div>`).join('')}</div>
+      <div class="legend"><span><i style="background:var(--s-new)"></i>Found</span><span><i style="background:var(--s-applied)"></i>Applied</span><span><i style="background:var(--s-approved)"></i>Outreach sent</span></div>
+    </div>
+    <div class="panel pad mix"><h3>Open roles — where</h3>${mixHtml(loc)}<h3 style="margin-top:18px">Open roles — type</h3>${mixHtml(typ)}</div>
+    <div class="panel pad"><h3>Background activity</h3><div class="log">${log.length ? log.map(l => `<div><span class="muted">${new Date(l.at).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</span> ${esc(l.msg)}</div>`).join('') : '<p class="muted small">Scans and outreach runs will log here.</p>'}</div></div>
+  </div>`;
+};
+
+views.discover = () => {
+  const f = state.filter.discover || { q:'', show:'new', loc:'all' };
+  let list = jobsArr().filter(j => f.show === 'new' ? j.status === 'new' : f.show === 'dismissed' ? j.status === 'dismissed' : true);
+  if (f.loc !== 'all') list = list.filter(j => f.loc === 'remote' ? (j.remote || /remote/i.test(j.location||'')) : /new york|nyc|brooklyn|manhattan/i.test(j.location||''));
+  if (f.q) { const q = f.q.toLowerCase(); list = list.filter(j => (j.title+' '+j.company+' '+(j.location||'')).toLowerCase().includes(q)); }
+  list.sort((a,b) => new Date(b.postedAt||b.foundAt||0) - new Date(a.postedAt||a.foundAt||0));
+  return `
+  <div class="head"><h2>Discover</h2><span class="muted">New-grad & entry-level UI/UX roles · NYC + remote · scanned every 2 hours</span><span class="spacer"></span><button class="btn" data-add="job">Add a role</button></div>
+  <div class="filters">
+    <input id="dq" placeholder="Search title, company…" value="${esc(f.q)}" data-filter="discover.q">
+    <div class="seg">${[['new','New'],['all','All'],['dismissed','Dismissed']].map(([k,l]) => `<button class="${f.show===k?'on':''}" data-seg="discover.show:${k}">${l}</button>`).join('')}</div>
+    <div class="seg">${[['all','Anywhere'],['nyc','NYC'],['remote','Remote']].map(([k,l]) => `<button class="${f.loc===k?'on':''}" data-seg="discover.loc:${k}">${l}</button>`).join('')}</div>
+  </div>
+  <div class="list">${list.length ? list.map(j => `
+    <div class="panel job">
+      <div>
+        <div class="t"><a href="#" data-open="job:${esc(j.id)}" style="color:inherit;text-decoration:none">${esc(j.title)}</a></div>
+        <div class="meta">${esc(j.company)} · ${esc(j.location||'')}${j.level?` · ${esc(j.level)}`:''} · ${j.postedAt?'posted '+ago(j.postedAt):'found '+ago(j.foundAt)}${j.applicants?` · ${esc(j.applicants)}`:''}</div>
+        ${j.summary ? `<div class="small" style="margin-top:6px">${esc(j.summary)}</div>` : ''}
+      </div>
+      <div class="acts">
+        ${j.status !== 'new' ? `<span class="pill dot st-${esc(j.status)}">${STAGE_LABEL[j.status]||esc(j.status)}</span>` : ''}
+        ${safeUrl(j.url) ? `<a class="btn sm" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}
+        ${j.status === 'new' ? `<button class="btn sm ghost" data-status="${esc(j.id)}:dismissed">Dismiss</button><button class="btn sm primary" data-status="${esc(j.id)}:approved">Approve</button>` : j.status === 'dismissed' ? `<button class="btn sm" data-status="${esc(j.id)}:new">Restore</button>` : ''}
+      </div>
+    </div>`).join('') : `<div class="panel empty">${f.show==='new' ? 'No new listings. The next scan will add any it finds.' : 'Nothing here.'}</div>`}</div>`;
+};
+
+views.pipeline = () => {
+  const jobs = jobsArr();
+  const col = s => jobs.filter(j => j.status === s).sort((a,b) => new Date((b.history||[]).at(-1)?.at||0) - new Date((a.history||[]).at(-1)?.at||0));
+  const closed = jobs.filter(j => j.status === 'rejected');
+  return `
+  <div class="head"><h2>Pipeline</h2><span class="muted">Drag cards between columns, or open one to edit</span></div>
+  <div class="board">${STAGES.map(s => { const items = col(s); return `
+    <div class="col" data-col="${s}"><h4><span class="pill dot st-${s}">${STAGE_LABEL[s]}</span><span class="muted">${items.length}</span></h4>
+      ${items.map(j => `<div class="kc" draggable="true" data-drag="${esc(j.id)}" data-open="job:${esc(j.id)}">
+        <div class="t">${esc(j.title)}</div><div class="c">${esc(j.company)}${j.appNumber?` · #${esc(j.appNumber)}`:''}</div>
+        ${s==='approved' ? `<div class="small" style="margin-top:4px">${outreachBadge(j)}</div>` : ''}
+        ${j.latestEmail ? `<div class="em">✉ ${esc(j.latestEmail.subject||'')} <span class="muted">· ${fmt(j.latestEmail.date)}</span></div>` : ''}
+      </div>`).join('') || '<div class="small muted" style="padding:6px">—</div>'}
+    </div>`; }).join('')}</div>
+  ${closed.length ? `<div class="panel pad" style="margin-top:16px"><h3>Closed (${closed.length})</h3>${closed.map(j => `<span class="pill" style="margin:0 6px 6px 0;cursor:pointer" data-open="job:${esc(j.id)}">${esc(j.title)} · ${esc(j.company)}</span>`).join('')}</div>` : ''}`;
+};
+function outreachBadge(j) {
+  const n = (j.outreach||[]).length;
+  if (j.outreachStatus === 'queued') return '<span class="pill warn">Outreach queued</span>';
+  if (j.outreachStatus === 'drafting') return '<span class="pill warn">Drafting…</span>';
+  if (n) return `<span class="pill ok">${n} drafts</span>`;
+  return '';
+}
+
+views.outreach = () => {
+  const f = state.filter.outreach || { show:'unsent', q:'' };
+  let list = allDrafts();
+  if (f.show === 'unsent') list = list.filter(o => !o.sentAt);
+  if (f.show === 'sent') list = list.filter(o => o.sentAt);
+  if (f.q) { const q = f.q.toLowerCase(); list = list.filter(o => (o.name+' '+o.job.company+' '+o.job.title).toLowerCase().includes(q)); }
+  list.sort((a,b) => (a.sentAt?1:0) - (b.sentAt?1:0) || new Date(b.createdAt||0) - new Date(a.createdAt||0));
+  return `
+  <div class="head"><h2>Outreach</h2><span class="muted">Every draft in one place. Nothing is ever sent automatically.</span></div>
+  <div class="filters"><input id="oq" placeholder="Search name, company…" value="${esc(f.q)}" data-filter="outreach.q">
+    <div class="seg">${[['unsent','To send'],['sent','Sent'],['all','All']].map(([k,l]) => `<button class="${f.show===k?'on':''}" data-seg="outreach.show:${k}">${l}</button>`).join('')}</div></div>
+  <div class="list">${list.length ? list.map(o => { const fu = draftFollowUp(o); const k = `${esc(o.job.id)}|${esc(o.id)}`; const gl = safeUrl(o.gmailDraftUrl); const li = safeUrl(o.linkedin); return `
+    <div class="panel draft">
+      <div class="row">
+        <b>${esc(o.name)}</b><span class="pill">${ROLE_LABEL[o.role]||esc(o.role||'Contact')}</span>
+        <span class="muted small">${esc(o.title||'')}${o.title?' · ':''}<a href="#" data-open="job:${esc(o.job.id)}">${esc(o.job.title)} · ${esc(o.job.company)}</a></span>
+        <span class="spacer"></span>
+        ${o.sentAt ? `<span class="pill ok">Sent ${fmt(o.sentAt)}</span>` : ''}
+        ${o.repliedAt ? `<span class="pill ok">Replied</span>` : fu ? `<span class="pill ${fu < now() ? 'bad' : 'warn'}">Follow up ${fmt(fu)}</span>` : ''}
+      </div>
+      <div class="small muted" style="margin-top:4px">${o.channel === 'linkedin' ? 'LinkedIn message' : 'Email'}${o.email?` · ${esc(o.email)}`:''}${o.subject?` · <i>${esc(o.subject)}</i>`:''}</div>
+      <pre>${esc(o.body||'')}</pre>
+      <div class="row" style="margin-top:10px">
+        <button class="btn sm" data-copy="${k}">Copy</button>
+        ${gl ? `<a class="btn sm" href="${esc(gl)}" target="_blank" rel="noopener">Open Gmail draft ↗</a>` : ''}
+        ${li ? `<a class="btn sm" href="${esc(li)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}
+        <span class="spacer"></span>
+        ${o.sentAt ? `<button class="btn sm ghost" data-draft="${k}:unsend">Undo sent</button>${!o.repliedAt?`<button class="btn sm" data-draft="${k}:replied">Got a reply</button>`:''}<button class="btn sm" data-draft="${k}:tocontact">Add to network</button>` : `<button class="btn sm primary" data-draft="${k}:sent">Mark sent</button>`}
+      </div>
+    </div>`; }).join('') : `<div class="panel empty">${f.show==='unsent' ? 'No drafts waiting. Approve a role in Discover and the next outreach run will write them.' : 'Nothing here yet.'}</div>`}</div>`;
+};
+
+views.network = () => {
+  const f = state.filter.network || { q:'', show:'active' };
+  let list = netArr().filter(c => f.show === 'archived' ? c.archived : !c.archived);
+  if (f.q) { const q = f.q.toLowerCase(); list = list.filter(c => (c.name+' '+(c.company||'')+' '+(c.title||'')).toLowerCase().includes(q)); }
+  list.sort((a,b) => (nextFollowUp(a)?.getTime() ?? Infinity) - (nextFollowUp(b)?.getTime() ?? Infinity));
+  return `
+  <div class="head"><h2>Network</h2><span class="muted">Follow up one week after contact, then every two weeks</span><span class="spacer"></span><button class="btn" data-add="contact">Add contact</button></div>
+  <div class="filters"><input id="nq" placeholder="Search…" value="${esc(f.q)}" data-filter="network.q">
+    <div class="seg">${[['active','Active'],['archived','Archived']].map(([k,l]) => `<button class="${f.show===k?'on':''}" data-seg="network.show:${k}">${l}</button>`).join('')}</div></div>
+  <div class="panel tablewrap">${list.length ? `<table><thead><tr><th>Name</th><th>Company</th><th>Last contact</th><th>Next follow-up</th><th></th></tr></thead><tbody>
+    ${list.map(c => { const n = nextFollowUp(c); const due = n && n < new Date(startOfDay(now()).getTime()+DAY); return `<tr>
+      <td><a href="#" data-open="contact:${esc(c.id)}"><b>${esc(c.name)}</b></a><div class="small muted">${esc(c.title||'')}${c.how?` · ${esc(c.how)}`:''}</div></td>
+      <td>${esc(c.company||'')}</td>
+      <td>${fmt(c.lastContactAt) || '<span class="muted">—</span>'}<div class="small muted">${c.followUps?`${c.followUps} follow-up${c.followUps>1?'s':''}`:''}</div></td>
+      <td>${n ? `<span class="pill ${due?'bad':'warn'}">${fmt(n)}</span>` : '<span class="muted">—</span>'}</td>
+      <td style="text-align:right;white-space:nowrap"><button class="btn sm" data-touch="${esc(c.id)}">Followed up today</button></td>
+    </tr>`; }).join('')}</tbody></table>` : '<div class="empty">No contacts yet. Mark outreach as sent, then “Add to network”, or add someone by hand.</div>'}</div>`;
+};
+
+views.templates = () => {
+  const T = state.settings.templates || {};
+  const sel = state.filter.tpl || 'recruiter';
+  const t = T[sel] || DEFAULT_TEMPLATES[sel];
+  const jobs = jobsArr().filter(j => j.status !== 'dismissed');
+  const jobSel = state.filter.tplJob && state.jobs[state.filter.tplJob] ? state.filter.tplJob : (jobs[0]?.id || '');
+  const ctx = { ...ctxFor(state.jobs[jobSel], { name: state.filter.tplFirst || '' }) };
+  return `
+  <div class="head"><h2>Templates</h2><span class="muted">Placeholders: {first} {role} {company} {jobNumber} {portfolio} {name} {school} {focus} — plus free-text ones like {hook}</span></div>
+  <div class="grid g2">
+    <div class="panel pad">
+      <div class="seg" style="flex-wrap:wrap">${Object.keys({...DEFAULT_TEMPLATES, ...T}).map(k => `<button class="${k===sel?'on':''}" data-tpl="${esc(k)}">${esc((T[k]||DEFAULT_TEMPLATES[k]).label)}</button>`).join('')}</div>
+      <label for="tsub">Subject</label><input id="tsub" value="${esc(t.subject)}">
+      <label for="tbody">Body</label><textarea id="tbody" rows="14">${esc(t.body)}</textarea>
+      <div class="row" style="margin-top:10px"><button class="btn primary" data-savetpl="${esc(sel)}">Save template</button><button class="btn ghost" data-resettpl="${esc(sel)}">Reset to default</button></div>
+    </div>
+    <div class="panel pad">
+      <h3>Preview</h3>
+      <div class="row"><select id="tjob" style="flex:2">${jobs.map(j => `<option value="${esc(j.id)}" ${j.id===jobSel?'selected':''}>${esc(j.title)} · ${esc(j.company)}</option>`).join('') || '<option value="">No roles yet</option>'}</select><input id="tfirst" placeholder="First name" value="${esc(state.filter.tplFirst||'')}" style="flex:1"></div>
+      <label>Subject</label><div class="small"><b>${esc(fill(t.subject, ctx))}</b></div>
+      <label>Message</label><pre style="white-space:pre-wrap;font:13px/1.55 Inter,sans-serif;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;margin:0" id="tprev">${esc(fill(t.body, ctx))}</pre>
+      <div class="row" style="margin-top:10px"><button class="btn" id="tcopy">Copy message</button>${!state.settings.portfolio?'<span class="small muted">Add your portfolio link in Settings.</span>':''}</div>
+    </div>
+  </div>`;
+};
+
+views.settings = () => {
+  const s = state.settings;
+  return `
+  <div class="head"><h2>Settings</h2></div>
+  <div class="grid g2">
+    <div class="panel pad"><h3>You</h3>
+      <label for="s-name">Name</label><input id="s-name" value="${esc(s.name)}">
+      <label for="s-email">Email (Gmail)</label><input id="s-email" value="${esc(s.email)}">
+      <label for="s-portfolio">Portfolio link</label><input id="s-portfolio" value="${esc(s.portfolio)}" placeholder="https://…">
+      <label for="s-school">School</label><input id="s-school" value="${esc(s.school)}">
+      <label for="s-focus">What you focus on (one line)</label><input id="s-focus" value="${esc(s.focus)}" placeholder="e.g. accessible, research-driven mobile design">
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="s-save">Save</button></div>
+    </div>
+    <div class="panel pad"><h3>LinkedIn search</h3>
+      <label for="s-kw">Keywords (one per line)</label><textarea id="s-kw" rows="5">${esc((s.search?.keywords||[]).join('\n'))}</textarea>
+      <label for="s-loc">Locations (one per line)</label><textarea id="s-loc" rows="3">${esc((s.search?.locations||[]).join('\n'))}</textarea>
+      <label for="s-lvl">Experience levels (one per line)</label><textarea id="s-lvl" rows="3">${esc((s.search?.levels||[]).join('\n'))}</textarea>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="s-save2">Save search</button></div>
+    </div>
+    <div class="panel pad"><h3>This device</h3>
+      <p class="small muted">Connected to <b>${esc(cfg.repo)}</b>. The token is stored only in this browser.</p>
+      <div class="row"><button class="btn" id="s-lock">Lock this device</button><select id="s-theme" style="width:auto"><option value="">Theme: system</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+    </div>
+    <div class="panel pad"><h3>Automation bridge</h3>
+      <p class="small muted">Background tasks use <code>window.jobhq</code> on this page in Chrome.</p>
+      <p class="small">Status: <span class="pill ok">Connected</span></p>
+    </div>
+  </div>`;
+};
+
+/* ---------- drawer ---------- */
+function openDrawer(html) { $('#drawer').innerHTML = html; $('#drawer').classList.add('on'); $('#scrim').classList.add('on'); }
+function closeDrawer() { $('#drawer').classList.remove('on'); $('#scrim').classList.remove('on'); }
+function jobDrawer(id) {
+  const j = state.jobs[id] || { id: '', title:'', company:'', location:'', status:'new', url:'' };
+  const isNew = !state.jobs[id];
+  openDrawer(`
+    <div class="row"><h2 style="flex:1">${isNew ? 'Add a role' : esc(j.title)}</h2><button class="btn ghost" data-close>✕</button></div>
+    ${!isNew ? `<div class="muted">${esc(j.company)} · ${esc(j.location||'')}</div>` : ''}
+    <div class="row" style="margin-top:12px">${!isNew ? `<span class="pill dot st-${esc(j.status)}">${STAGE_LABEL[j.status]||esc(j.status)}</span> ${outreachBadge(j)}` : ''}<span class="spacer"></span>${safeUrl(j.url)?`<a class="btn sm" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">LinkedIn ↗</a>`:''}</div>
+    <label for="j-title">Title</label><input id="j-title" value="${esc(j.title)}">
+    <label for="j-company">Company</label><input id="j-company" value="${esc(j.company)}">
+    <label for="j-location">Location</label><input id="j-location" value="${esc(j.location||'')}">
+    <label for="j-url">Listing URL</label><input id="j-url" value="${esc(j.url||'')}">
+    <div class="grid g2" style="gap:10px"><div><label for="j-jobnum">Job / req number</label><input id="j-jobnum" value="${esc(j.jobNumber||'')}"></div><div><label for="j-appnum">Application number</label><input id="j-appnum" value="${esc(j.appNumber||'')}"></div></div>
+    <label for="j-status">Stage</label><select id="j-status">${Object.entries(STAGE_LABEL).map(([k,l]) => `<option value="${k}" ${j.status===k?'selected':''}>${l}</option>`).join('')}</select>
+    <label for="j-notes">Notes</label><textarea id="j-notes">${esc(j.notes||'')}</textarea>
+    <div class="row" style="margin-top:12px"><button class="btn primary" data-savejob="${esc(j.id)}">${isNew?'Add':'Save'}</button>${!isNew && j.status==='approved' && j.outreachStatus !== 'queued' ? `<button class="btn" data-requeue="${esc(j.id)}">Re-run outreach</button>`:''}</div>
+    ${j.latestEmail ? `<h3 style="margin-top:24px">Latest email</h3><div class="panel pad small" style="margin-top:8px"><b>${esc(j.latestEmail.subject||'')}</b><div class="muted">${esc(j.latestEmail.from||'')} · ${fmt(j.latestEmail.date)}</div><p>${esc(j.latestEmail.snippet||'')}</p>${safeUrl(j.latestEmail.threadUrl)?`<a href="${esc(safeUrl(j.latestEmail.threadUrl))}" target="_blank" rel="noopener">Open in Gmail ↗</a>`:''}</div>` : ''}
+    ${(j.outreach||[]).length ? `<h3 style="margin-top:24px">People (${j.outreach.length})</h3><div class="list" style="margin-top:8px">${j.outreach.map(o => `<div class="panel pad small"><b>${esc(o.name)}</b> <span class="pill">${ROLE_LABEL[o.role]||esc(o.role||'')}</span> ${o.sentAt?'<span class="pill ok">Sent</span>':''}<div class="muted">${esc(o.title||'')}${o.why?` — ${esc(o.why)}`:''}</div></div>`).join('')}</div>` : ''}
+    ${(j.history||[]).length ? `<h3 style="margin-top:24px">History</h3><div class="small" style="margin-top:6px">${j.history.slice().reverse().map(h => `<div>${fmt(h.at)} — ${STAGE_LABEL[h.status]||esc(h.status)}</div>`).join('')}</div>` : ''}
+  `);
+}
+function contactDrawer(id) {
+  const c = state.network[id] || { id:'', name:'', company:'', title:'', email:'', linkedin:'', how:'', notes:'' };
+  const isNew = !state.network[id];
+  const n = nextFollowUp(c);
+  openDrawer(`
+    <div class="row"><h2 style="flex:1">${isNew?'Add contact':esc(c.name)}</h2><button class="btn ghost" data-close>✕</button></div>
+    ${!isNew && n ? `<p class="muted">Next follow-up: <b>${fmt(n)}</b></p>` : ''}
+    <label for="c-name">Name</label><input id="c-name" value="${esc(c.name)}">
+    <div class="grid g2" style="gap:10px"><div><label for="c-company">Company</label><input id="c-company" value="${esc(c.company||'')}"></div><div><label for="c-title">Title</label><input id="c-title" value="${esc(c.title||'')}"></div></div>
+    <div class="grid g2" style="gap:10px"><div><label for="c-email">Email</label><input id="c-email" value="${esc(c.email||'')}"></div><div><label for="c-li">LinkedIn URL</label><input id="c-li" value="${esc(c.linkedin||'')}"></div></div>
+    <label for="c-how">How you know them</label><input id="c-how" value="${esc(c.how||'')}" placeholder="Alum, recruiter for …, met at …">
+    <label for="c-last">Last contact</label><input id="c-last" type="date" value="${c.lastContactAt ? dayKey(c.lastContactAt) : dayKey(now())}">
+    <label for="c-notes">Notes</label><textarea id="c-notes">${esc(c.notes||'')}</textarea>
+    <div class="row" style="margin-top:12px"><button class="btn primary" data-savecontact="${esc(c.id)}">${isNew?'Add':'Save'}</button>${!isNew?`<button class="btn" data-touch="${esc(c.id)}">Followed up today</button><button class="btn ghost" data-archive="${esc(c.id)}">${c.archived?'Unarchive':'Archive'}</button>`:''}</div>
+    ${!isNew ? `<h3 style="margin-top:22px">Catch-up message</h3><pre style="white-space:pre-wrap;font:13px/1.55 Inter,sans-serif;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px">${esc(fill((state.settings.templates.catchup||DEFAULT_TEMPLATES.catchup).body, { ...ctxFor({ company:c.company }, c) }))}</pre>` : ''}
+  `);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-v],[data-go],[data-open],[data-status],[data-seg],[data-copy],[data-draft],[data-touch],[data-add],[data-close],[data-savejob],[data-savecontact],[data-archive],[data-requeue],[data-tpl],[data-savetpl],[data-resettpl],#tcopy,#s-save,#s-save2,#s-lock,#refresh,#scrim');
+  if (!t) return;
+  const d = t.dataset;
+  if (t.id === 'scrim' || 'close' in d) return closeDrawer();
+  if (d.v || d.go) { e.preventDefault(); state.view = d.v || d.go; store.set('jhq.view', state.view); return render(); }
+  if (d.open) { e.preventDefault(); const [k, id] = d.open.split(':'); if (k === 'contact') return contactDrawer(id); if (k === 'draft') { state.view='outreach'; return render(); } return jobDrawer(id); }
+  if (d.status) { const [id, s] = d.status.split(':'); return setStatus(id, s); }
+  if (d.seg) { const [path, val] = d.seg.split(':'); const [v,k] = path.split('.'); state.filter[v] = { ...(state.filter[v] || { discover:{q:'',show:'new',loc:'all'}, outreach:{show:'unsent',q:''}, network:{q:'',show:'active'} }[v]), [k]: val }; return render(); }
+  if (d.copy) { const [jid, did] = d.copy.split('|'); const o = (state.jobs[jid]?.outreach||[]).find(x => x.id === did); if (o) copy((o.channel !== 'linkedin' && o.subject ? `Subject: ${o.subject}\n\n` : '') + o.body); return; }
+  if (d.draft) { const [k, act] = d.draft.split(':'); const [jid, did] = k.split('|'); const j = state.jobs[jid]; const o = (j?.outreach||[]).find(x => x.id === did); if (!o) return;
+    if (act === 'sent') return setDraft(jid, did, { sentAt: iso(now()), followUpAt: iso(new Date(Date.now()+7*DAY)) }, `Sent: ${o.name} (${j.company})`).then(()=>toast('Marked sent · follow-up in 7 days'));
+    if (act === 'unsend') return setDraft(jid, did, { sentAt: null, followUpAt: null }, `Unsent: ${o.name}`);
+    if (act === 'replied') return setDraft(jid, did, { repliedAt: iso(now()) }, `Reply: ${o.name}`);
+    if (act === 'tocontact') { const cid = 'c_' + (o.email || o.linkedin || o.name).toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40);
+      return update('network', n => { n[cid] = { ...(n[cid]||{}), id:cid, name:o.name, company:j.company, title:o.title||'', email:o.email||'', linkedin:o.linkedin||'', how:`${ROLE_LABEL[o.role]||'Contact'} — ${j.title}`, jobId:jid, lastContactAt: n[cid]?.lastContactAt || o.sentAt || iso(now()), followUps: n[cid]?.followUps || 0, nextFollowUpAt: null }; return n; }, `Network: add ${o.name}`).then(()=>toast('Added to network')); }
+  }
+  if (d.touch) { const id = d.touch; return update('network', n => { const c = n[id]; if (!c) return n; c.followUps = (c.followUps||0) + 1; c.lastContactAt = iso(now()); c.nextFollowUpAt = null; return n; }, `Followed up: ${state.network[id]?.name}`).then(()=>{ toast('Next follow-up in 2 weeks'); if ($('#drawer').classList.contains('on')) contactDrawer(id); }); }
+  if (d.add === 'job') return jobDrawer('__new');
+  if (d.add === 'contact') return contactDrawer('__new');
+  if ('savejob' in d) { const id = d.savejob || uid('j'); const v = k => $('#j-'+k).value.trim(); const status = v('status');
+    if (!v('title') || !v('company')) return toast('Title and company are required');
+    return update('jobs', db => { const prev = db[id] || { id, foundAt: iso(now()), source:'manual', history:[], outreach:[] }; const j = { ...prev, title:v('title'), company:v('company'), location:v('location'), url:v('url'), jobNumber:v('jobnum'), appNumber:v('appnum'), notes:$('#j-notes').value };
+      if (prev.status !== status) { j.status = status; j.history = [...(prev.history||[]), { at: iso(now()), status }]; if (status==='approved' && !j.outreachStatus) { j.outreachStatus='queued'; j.approvedAt=iso(now()); } if (status==='applied' && !j.appliedAt) j.appliedAt = iso(now()); }
+      db[id] = j; return db; }, `Edit: ${v('title')} @ ${v('company')}`).then(() => { toast('Saved'); closeDrawer(); }); }
+  if ('savecontact' in d) { const id = d.savecontact || uid('c'); const v = k => $('#c-'+k).value.trim(); if (!v('name')) return toast('Name is required');
+    return update('network', n => { const prev = n[id] || { id, followUps:0 }; const last = v('last') ? iso(new Date(v('last')+'T12:00:00')) : prev.lastContactAt; n[id] = { ...prev, name:v('name'), company:v('company'), title:v('title'), email:v('email'), linkedin:v('li'), how:v('how'), notes:$('#c-notes').value, lastContactAt:last, nextFollowUpAt: last !== prev.lastContactAt ? null : prev.nextFollowUpAt }; return n; }, `Network: ${v('name')}`).then(()=>{ toast('Saved'); closeDrawer(); }); }
+  if (d.archive) { const id = d.archive; return update('network', n => { if (n[id]) n[id].archived = !n[id].archived; return n; }, 'Network: archive').then(closeDrawer); }
+  if (d.requeue) return update('jobs', db => { if (db[d.requeue]) db[d.requeue].outreachStatus = 'queued'; return db; }, 'Re-queue outreach').then(()=>{ toast('Queued for next outreach run'); closeDrawer(); });
+  if (d.tpl) { state.filter.tpl = d.tpl; return render(); }
+  if (d.savetpl) { const k = d.savetpl; const sub = $('#tsub').value, body = $('#tbody').value; return update('settings', s => { s.templates = { ...DEFAULT_TEMPLATES, ...(s.templates||{}) }; s.templates[k] = { ...s.templates[k], subject:sub, body }; return s; }, `Template: ${k}`).then(()=>toast('Template saved')); }
+  if (d.resettpl) { const k = d.resettpl; return update('settings', s => { s.templates = { ...(s.templates||{}) , [k]: DEFAULT_TEMPLATES[k] }; return s; }, `Template reset: ${k}`); }
+  if (t.id === 'tcopy') return copy($('#tprev').textContent);
+  if (t.id === 's-save') { const v = k => $('#s-'+k).value.trim(); return update('settings', s => ({ ...s, name:v('name'), email:v('email'), portfolio:v('portfolio'), school:v('school'), focus:v('focus') }), 'Settings: profile').then(()=>toast('Saved')); }
+  if (t.id === 's-save2') { const lines = id => $(id).value.split('\n').map(x=>x.trim()).filter(Boolean); return update('settings', s => ({ ...s, search:{ keywords:lines('#s-kw'), locations:lines('#s-loc'), levels:lines('#s-lvl') } }), 'Settings: search').then(()=>toast('Saved')); }
+  if (t.id === 's-lock') { store.del('jhq.token'); location.reload(); }
+  if (t.id === 'refresh') { try { await loadAll(); render(); toast('Refreshed'); } catch (err) { setSync(err.message, true); } }
+});
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.filter) { const [v,k] = t.dataset.filter.split('.'); state.filter[v] = { ...(state.filter[v] || { discover:{q:'',show:'new',loc:'all'}, outreach:{show:'unsent',q:''}, network:{q:'',show:'active'} }[v]), [k]: t.value }; render(); }
+  if (t.id === 'tfirst') { state.filter.tplFirst = t.value; updateTplPreview(); }
+  if (t.id === 'tsub' || t.id === 'tbody') updateTplPreview();
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'tjob') { state.filter.tplJob = e.target.value; updateTplPreview(); }
+  if (e.target.id === 's-theme') { const v = e.target.value; if (v) document.documentElement.dataset.theme = v; else delete document.documentElement.dataset.theme; store.set('jhq.theme', v); }
+});
+function updateTplPreview() {
+  const p = $('#tprev'); if (!p) return;
+  const ctx = ctxFor(state.jobs[$('#tjob')?.value], { name: $('#tfirst')?.value || '' });
+  p.textContent = fill($('#tbody').value, ctx);
+  const subj = p.parentElement.querySelector('label + .small b'); if (subj) subj.textContent = fill($('#tsub').value, ctx);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+// drag & drop on pipeline
+document.addEventListener('dragstart', e => { const c = e.target.closest('[data-drag]'); if (c) e.dataTransfer.setData('text/plain', c.dataset.drag); });
+document.addEventListener('dragover', e => { const col = e.target.closest('[data-col]'); if (col) { e.preventDefault(); col.classList.add('drop'); } });
+document.addEventListener('dragleave', e => { const col = e.target.closest('[data-col]'); if (col && !col.contains(e.relatedTarget)) col.classList.remove('drop'); });
+document.addEventListener('drop', e => { const col = e.target.closest('[data-col]'); if (!col) return; e.preventDefault(); col.classList.remove('drop'); const id = e.dataTransfer.getData('text/plain'); if (id && state.jobs[id] && state.jobs[id].status !== col.dataset.col) setStatus(id, col.dataset.col); });
+
+/* ---------- boot ---------- */
+const theme = store.get('jhq.theme'); if (theme) document.documentElement.dataset.theme = theme;
+async function boot() {
+  $('#lock').style.display = 'none'; $('#app').style.display = 'block';
+  $('#view').innerHTML = '<div class="empty">Loading…</div>';
+  try { await loadAll(); render(); const th = $('#s-theme'); if (th) th.value = theme || ''; resolveReady(true); }
+  catch (err) {
+    $('#app').style.display = 'none'; $('#lock').style.display = 'grid';
+    $('#lk-msg').textContent = /401|403|404/.test(err.message) ? 'Token can’t reach that repo. Check the repo name and token permissions.' : err.message;
+  }
+}
+$('#lk-go').addEventListener('click', () => {
+  const repo = $('#lk-repo').value.trim(), token = $('#lk-token').value.trim();
+  if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !token) { $('#lk-msg').textContent = 'Enter the repo (owner/name) and a token.'; return; }
+  cfg.repo = repo; cfg.token = token; store.set('jhq.repo', repo); store.set('jhq.token', token); boot();
+});
+$('#lk-token').addEventListener('keydown', e => { if (e.key === 'Enter') $('#lk-go').click(); });
+// Pick up writes from the background tasks while the page is open.
+setInterval(() => { if (cfg.token && document.visibilityState === 'visible' && !$('#drawer').classList.contains('on') && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) loadAll().then(render).catch(()=>{}); }, 120000);
+if (cfg.token) boot();
+})();
+</script>
+</body>
+</html>
